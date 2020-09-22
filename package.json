@@ -4,5 +4,8 @@
     "isomorphic-fetch": "^2.2.1",
     "polyfill": "^0.1.0",
     "polylabel": "^1.1.0"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10"
   }
 }
