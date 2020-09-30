@@ -8,10 +8,11 @@ const fetch = require('fetch-retry')(originalFetch);
 // Create the script tag, set the appropriate attributes
 const script = document.createElement('script');
 
-
 const api_key = process.env.MAPS_API_KEY;
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
 console.log("Here's the src" + script.src);
+
+console.log("Here's your doggo: " + process.env.DOGGO);
 
 
 script.defer = true;
