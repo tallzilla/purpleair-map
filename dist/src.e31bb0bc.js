@@ -1082,10 +1082,11 @@ var fetch = require('fetch-retry')(originalFetch); // Create the script tag, set
 
 
 var script = document.createElement('script');
-var api_key = "doggy";
+var api_key = undefined;
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
-console.log("Here's the src" + script.src); //console.log("Here's your doggo: " + process.env.DOGGO);
-
+console.log("Here's the src " + script.src);
+console.log("Here's your doggo: " + undefined);
+console.log("Here's your doggo: " + undefined);
 script.defer = true;
 script.async = true;
 
@@ -1224,7 +1225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54257" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54728" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
