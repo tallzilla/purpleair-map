@@ -1,0 +1,26 @@
+{
+  "name": "purpleair-map",
+  "version": "1.0.0",
+  "description": "To run:\r parcel .\\src\\index.html",
+  "main": "src.3d2dfd7b.js",
+  "dependencies": {
+    "cssnano": "^4.1.10",
+    "fetch-retry": "^4.0.1",
+    "isomorphic-fetch": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tallzilla/purpleair-map.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tallzilla/purpleair-map/issues"
+  },
+  "homepage": "https://github.com/tallzilla/purpleair-map#readme"
+}

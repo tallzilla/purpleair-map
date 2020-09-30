@@ -1084,8 +1084,9 @@ var fetch = require('fetch-retry')(originalFetch); // Create the script tag, set
 var script = document.createElement('script');
 var api_key = undefined;
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
-console.log("Here's the src" + script.src); //console.log("Here's your doggo: " + process.env.DOGGO);
-
+console.log("Here's the src " + script.src);
+console.log("Here's your doggo: " + undefined);
+console.log("Here's your doggo: " + undefined);
 script.defer = true;
 script.async = true;
 
@@ -1197,4 +1198,3 @@ function pm25ToAQI(pm25) {
 
 document.head.appendChild(script);
 },{"process":"R3IB","isomorphic-fetch":"Moh1","fetch-retry":"aGSI"}]},{},["Focm"], null)
-//# sourceMappingURL=https://billheil.com/purpleair-map/src.b44efccf.js.map
