@@ -1,16 +1,24 @@
+// Get the built-in Node process module (lets me get env variables)
+const process = require('process');
 
 //from https://www.npmjs.com/package/fetch-retry
-var originalFetch = require('isomorphic-fetch');
-var fetch = require('fetch-retry')(originalFetch);
+const originalFetch = require('isomorphic-fetch');
+const fetch = require('fetch-retry')(originalFetch);
 
 // Create the script tag, set the appropriate attributes
-var script = document.createElement('script');
+const script = document.createElement('script');
 
-script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c&callback=initMap';
+
+const api_key = process.env.MAPS_API_KEY;
+script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
+console.log("Here's the src" + script.src);
+
+
 script.defer = true;
 script.async = true;
 
 window.initMap = function() {
+
     const map = new google.maps.Map(document.getElementById("map"));
 
     bounds  = new google.maps.LatLngBounds();
@@ -71,6 +79,25 @@ window.initMap = function() {
             });
         }
 }
+
+//from: https://developers.google.com/maps/documentation/javascript/combining-data#maps_combining_data-javascript
+/** Loads the state boundary polygons from a GeoJSON source. */
+function loadMapShapes() {
+  // load US state outline polygons from a GeoJson file
+  map.data.loadGeoJson(
+    "https://storage.googleapis.com/mapsdevsite/json/states.js",
+    { idPropertyName: "STATE" }
+  );
+  // wait for the request to complete by listening for the first feature to be
+  // added
+  // google.maps.event.addListenerOnce(map.data, "addfeature", () => {
+  //   google.maps.event.trigger(
+  //     document.getElementById("census-variable"),
+  //     "change"
+  //   );
+  // });
+}
+
 
 //here's a reference on calculating AQI
 //https://github.com/dazimmermann/PurpleAir/blob/master/PurpleAir/Program.cs
