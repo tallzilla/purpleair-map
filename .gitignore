@@ -1,3 +1,6 @@
+#env file (github has a prod env file for pages)
+src/.env
+
 # Logs
 logs
 *.log
