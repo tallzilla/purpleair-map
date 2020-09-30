@@ -13,7 +13,7 @@ script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callba
 console.log("Here's the src " + script.src);
 
 console.log("Here's your doggo: " + process.env.DOGGO);
-
+console.log("Here's your doggo: " + process.env.GITHUB_WORKFLOW);
 
 script.defer = true;
 script.async = true;
