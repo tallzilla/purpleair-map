@@ -1,6 +1,8 @@
 // Get the built-in Node process module (lets me get env variables)
 const process = require('process');
 
+const dotenv = require('dotenv').config();
+
 //from https://www.npmjs.com/package/fetch-retry
 const originalFetch = require('isomorphic-fetch');
 const fetch = require('fetch-retry')(originalFetch);
