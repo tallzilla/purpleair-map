@@ -6,24 +6,13 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-    #- name: Checkout
-    #  uses: actions/checkout@v1
-
-#    - name: Build
-    # - name: Hello world action
-    #   run: |
-    #     npm install
-    #     npm run-script build
-    #   env:
-    #     SECRETS_DOGGO: ${{ secrets.DOGGO }}
-    #     SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-
     - name: make env
       uses: yuzuy/gha-secrets@v1.1
       with:
-        tmp-file: './src/.env.tmp'
-        out-file: './src/.env'
+        tmp-file: '.env.tmp'
+        out-file: '.env'
       env:
         SECRETS_DOGGO: ${{ secrets.DOGGO }}
         SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
