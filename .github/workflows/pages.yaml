@@ -11,17 +11,19 @@ jobs:
     #  uses: actions/checkout@v1
 
 #    - name: Build
-    - name: Hello world action
-      run: |
-        npm install
-        npm run-script build
+    # - name: Hello world action
+    #   run: |
+    #     npm install
+    #     npm run-script build
+    #   env:
+    #     SECRETS_DOGGO: ${{ secrets.DOGGO }}
+    #     SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+
+    - name: make env
+      uses: yuzuy/gha-secrets@v1.1
+      with:
+        tmp-file: '.env.tmp'
+        out-file: '.env'
       env:
         SECRETS_DOGGO: ${{ secrets.DOGGO }}
-        SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-
-    #- name: Deploy
-    #  uses: JamesIves/github-pages-deploy-action@releases/v3
-    #  with:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_KEY }}
-    #    BRANCH: gh-pages
-    #    FOLDER: docs
+        SECRETS_MAPS_API_KEY: ${{ SECRETS_MAPS_API_KEY }}
