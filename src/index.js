@@ -11,7 +11,7 @@ const script = document.createElement('script');
 const api_key = process.env.MAPS_API_KEY;
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
 
-console.log("Here's the url we're getting" + script.src);
+console.log("Here's the url we're getting " + script.src);
 
 script.defer = true;
 script.async = true;
