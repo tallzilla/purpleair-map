@@ -11,6 +11,8 @@ const script = document.createElement('script');
 const api_key = process.env.MAPS_API_KEY;
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
 
+console.log("Here's the url we're getting" + script.src);
+
 script.defer = true;
 script.async = true;
 
@@ -75,24 +77,6 @@ window.initMap = function() {
             map.panToBounds(bounds);
             });
         }
-}
-
-//from: https://developers.google.com/maps/documentation/javascript/combining-data#maps_combining_data-javascript
-/** Loads the state boundary polygons from a GeoJSON source. */
-function loadMapShapes() {
-  // load US state outline polygons from a GeoJson file
-  // map.data.loadGeoJson(
-  //   "https://storage.googleapis.com/mapsdevsite/json/states.js",
-  //   { idPropertyName: "STATE" }
-  // );
-  // wait for the request to complete by listening for the first feature to be
-  // added
-  // google.maps.event.addListenerOnce(map.data, "addfeature", () => {
-  //   google.maps.event.trigger(
-  //     document.getElementById("census-variable"),
-  //     "change"
-  //   );
-  // });
 }
 
 
