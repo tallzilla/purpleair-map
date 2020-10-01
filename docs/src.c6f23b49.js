@@ -1621,4 +1621,4 @@ function pm25ToAQI(pm25) {
 
 document.head.appendChild(script);
 },{"process":"MyHX","dotenv":"YF8F","isomorphic-fetch":"kQO1","fetch-retry":"UUcy"}]},{},["Focm"], null)
-//# sourceMappingURL=https://billheil.com/purpleair-map/src.3cc7534b.js.map
+//# sourceMappingURL=https://billheil.com/purpleair-map/src.c6f23b49.js.map
