@@ -22,8 +22,8 @@ jobs:
     - name: make env
       uses: yuzuy/gha-secrets@v1.1
       with:
-        tmp-file: 'purpleair-map/src/.env.tmp'
-        out-file: 'purpleair-map/src/.env'
+        tmp-file: '${{HOME}}/src/.env.tmp'
+        out-file: '${{HOME}}/src/.env'
       env:
         SECRETS_DOGGO: ${{ secrets.DOGGO }}
         SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
