@@ -12,10 +12,10 @@ jobs:
 
 #    - name: Build
     - name: Hello world action
-      #run: |
-      #  npm install
-      #  npm audit fix
-      #  npm run-script build
+      run: |
+        npm install
+        npm audit fix
+        npm run-script build
       env:
         SECRETS_DOGGO: ${{ secrets.DOGGO }}
         SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
