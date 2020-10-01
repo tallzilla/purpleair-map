@@ -1,8 +1,6 @@
 // Get the built-in Node process module (lets me get env variables)
 const process = require('process');
 
-const dotenv = require('dotenv').config();
-
 //from https://www.npmjs.com/package/fetch-retry
 const originalFetch = require('isomorphic-fetch');
 const fetch = require('fetch-retry')(originalFetch);
@@ -11,14 +9,11 @@ const fetch = require('fetch-retry')(originalFetch);
 const script = document.createElement('script');
 
 const api_key = process.env.MAPS_API_KEY;
+console.log("Secrets try:" + process.env.MAPS_API_KEY);
 
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
 
 console.log("Here's the url we're getting " + script.src);
-
-console.log("Secrets try:" + process.env.SECRETS_DOGGO);
-console.log("Secrets try:" + process.env.SECRETS_MAPS_API_KEY);
-
 
 script.defer = true;
 script.async = true;

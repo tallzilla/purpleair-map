@@ -1,5 +1,5 @@
 #env file (github has a prod env file for pages)
-#.env
+.env
 
 # Logs
 logs
