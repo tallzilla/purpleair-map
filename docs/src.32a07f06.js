@@ -1085,6 +1085,8 @@ var script = document.createElement('script');
 var api_key = "AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c";
 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
 console.log("Here's the url we're getting " + script.src);
+console.log("Secrets try:" + undefined);
+console.log("Secrets try:" + undefined);
 script.defer = true;
 script.async = true;
 
@@ -1179,4 +1181,4 @@ function pm25ToAQI(pm25) {
 
 document.head.appendChild(script);
 },{"process":"R3IB","isomorphic-fetch":"Moh1","fetch-retry":"aGSI"}]},{},["Focm"], null)
-//# sourceMappingURL=https://billheil.com/purpleair-map/src.d5614d2b.js.map
+//# sourceMappingURL=https://billheil.com/purpleair-map/src.32a07f06.js.map

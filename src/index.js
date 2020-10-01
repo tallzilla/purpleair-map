@@ -13,6 +13,10 @@ script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callba
 
 console.log("Here's the url we're getting " + script.src);
 
+console.log("Secrets try:" + process.env.SECRETS_DOGGO);
+console.log("Secrets try:" + process.env.SECRETS_MAPS_API_KEY);
+
+
 script.defer = true;
 script.async = true;
 
