@@ -10,5 +10,4 @@ jobs:
         envkey_MAPS_API_KEY: AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c
         envkey_DOGGO: ${{ secrets.DOGGO }}
         envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        some_other_variable: foobar
         file_name: .env
