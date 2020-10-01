@@ -26,4 +26,4 @@ jobs:
         out-file: '.env'
       env:
         SECRETS_DOGGO: ${{ secrets.DOGGO }}
-        SECRETS_MAPS_API_KEY: ${{ SECRETS_MAPS_API_KEY }}
+        SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
