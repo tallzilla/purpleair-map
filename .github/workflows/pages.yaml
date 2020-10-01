@@ -14,8 +14,8 @@ jobs:
     - name: Hello world action
       run: |
         npm install
-        npm audit fix
-        npm run-script build
+#        npm audit fix
+#        npm run-script build
       env:
         SECRETS_DOGGO: ${{ secrets.DOGGO }}
         SECRETS_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
