@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Setup npm package
+      run: npm init -y && npm install
     - name: make env
       uses: yuzuy/gha-secrets@v1.1
       with:
