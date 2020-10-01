@@ -8,7 +8,7 @@ jobs:
       uses: DamianReeves/write-file-action
       with:
         path: ${{ env.home}}/.test
-        contents: |
+        contents:
           echo "Hello World!"
         write-mode: append
     - name: Checkout 🛎️
