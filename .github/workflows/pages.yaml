@@ -19,7 +19,7 @@ jobs:
           envkey_MAPS_API_KEY: AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c
         file_name: .env
     - name: Build docs
-      run: echo 'parcel build ./src/index.html --out-dir docs --public-url https://billheil.com/purpleair-map/ --no-minify'
+      run: echo 'mkdir docs && parcel build ./src/index.html --out-dir docs --public-url https://billheil.com/purpleair-map/ --no-minify'
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3.7.0-8
       with:
