@@ -1,6 +1,10 @@
 #env file (github has a prod env file for pages)
 .env
 
+#any generated dist or doc folders
+dist/*
+docs/*
+
 # Logs
 logs
 *.log
