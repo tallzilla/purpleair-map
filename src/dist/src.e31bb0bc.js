@@ -1110,8 +1110,8 @@ script.defer = true;
 script.async = true;
 var map;
 var bounds;
-var aqiMin = 0,
-    aqiMax = 500;
+var censusMin = Number.MAX_VALUE,
+    censusMax = -Number.MAX_VALUE;
 var purpleDeviceIds = [66407, // Berkeley real
 66173 // Colorado real
 ];
@@ -1120,14 +1120,11 @@ window.initMap = function () {
   map = new google.maps.Map(document.getElementById("map"));
   bounds = new google.maps.LatLngBounds(); // set up the style rules and events for google.maps.Data
 
-  map.data.setStyle(styleFeature);
+  map.data.setStyle(styleFeature); //map.data.addListener("mouseover", mouseInToRegion);
+  //map.data.addListener("mouseout", mouseOutOfRegion);
+
   loadMapShapes(loadSensors);
 };
-/**
- * Loads sensor data into Google Map's data layer
- *
- */
-
 
 function loadSensors() {
   // on error purpleair redirects to another domain which doesn't use cors
@@ -1156,45 +1153,39 @@ function loadSensors() {
       var lon = sensor['Lon'];
       var pm = sensor['pm2_5_atm'];
       var sensorCoordinate = new google.maps.LatLng(lat, lon);
-      var aqi = Math.trunc(pm25ToAQI(pm)); // Draw a market with a calculated AQI
-
-      marker = new google.maps.Marker({
-        position: sensorCoordinate,
-        label: String(aqi),
-        map: map
-      });
       map.data.forEach(function (feature) {
         //console.log(feature);
         geometry = feature.getGeometry();
-        var polygons = []; //in constructing the below polygons I am relying on
-        //https://developers.google.com/maps/documentation/javascript/reference/data#Data.Polygon
-        // and the getAt function returning the exterior boundary at 0
+        var polygons = [];
 
         if (geometry.getType() == 'MultiPolygon') {
           for (var x = 0; x < geometry.getLength(); x++) {
-            //polygon = new google.maps.Polygon(geometry.getAt(x));
-            polygon = new google.maps.Polygon({
-              paths: geometry.getAt(x).getAt(0).getArray()
-            });
+            polygon = new google.maps.Polygon(geometry.getAt(x));
             polygons.push(polygon);
           }
         } else if (geometry.getType() == 'Polygon') {
-          //polygon = new google.maps.Polygon(geometry);
-          polygon = new google.maps.Polygon({
-            paths: geometry.getAt(0).getArray()
-          });
+          polygon = new google.maps.Polygon(geometry);
           polygons.push(polygon);
         } else {
           return;
         }
 
         polygons.forEach(function (polygon) {
+          feature.setProperty("census_variable", 1000);
           isInside = google.maps.geometry.poly.containsLocation(sensorCoordinate, polygon);
 
           if (isInside) {
-            feature.setProperty("aqi", aqi);
+            console.log("Is the sensor inside " + feature.getProperty('NAME') + "? " + isInside);
+          } else {
+            feature.setProperty("census_variable", -1000);
           }
         });
+      }); // Draw a market with a calculated AQI
+
+      marker = new google.maps.Marker({
+        position: sensorCoordinate,
+        label: String(pm25ToAQI(pm)),
+        map: map
       }); // update the bounding box
 
       loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
@@ -1206,11 +1197,7 @@ function loadSensors() {
     });
   }
 }
-/**
- * Loads the state boundary polygons from a GeoJSON source.
- *
- * @param {function} callback
- */
+/** Loads the state boundary polygons from a GeoJSON source. */
 
 
 function loadMapShapes(callback) {
@@ -1220,7 +1207,7 @@ function loadMapShapes(callback) {
   }, callback);
 }
 /**
- * Applies a gradient style based on the 'aqi' column.
+ * Applies a gradient style based on the 'census_variable' column.
  * This is the callback passed to data.setStyle() and is called for each row in
  * the data set.  Check out the docs for Data.StylingFunction.
  *
@@ -1234,7 +1221,7 @@ function styleFeature(feature) {
   var high = [151, 83, 34]; // color of largest datum
   // delta represents where the value sits between the min and max
 
-  var delta = (feature.getProperty("aqi") - aqiMin) / (aqiMax - aqiMin);
+  var delta = (feature.getProperty("census_variable") - censusMin) / (censusMax - censusMin);
   var color = [];
 
   for (var i = 0; i < 3; i++) {
@@ -1245,7 +1232,7 @@ function styleFeature(feature) {
 
   var showRow = true;
 
-  if (feature.getProperty("aqi") == null || isNaN(feature.getProperty("aqi"))) {
+  if (feature.getProperty("census_variable") == null || isNaN(feature.getProperty("census_variable"))) {
     showRow = false;
   }
 
@@ -1328,7 +1315,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55703" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55679" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
