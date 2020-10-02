@@ -20,9 +20,9 @@ jobs:
         file_name: .env
     - name: Build docs
       run: echo 'mkdir docs && parcel build ./src/index.html --out-dir docs --public-url https://billheil.com/purpleair-map/ --no-minify'
-    #- name: Deploy
-    #  uses: peaceiris/actions-gh-pages@v3.7.0-8
-    #  with:
-    #    github_token: ${{ secrets.GITHUB_TOKEN }}
-    #    publish_dir: docs
-        #publish_branch: master  # default: gh-pages
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3.7.0-8
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        publish_branch: master  # default: gh-pages
