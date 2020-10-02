@@ -27,8 +27,8 @@ jobs:
           ${{ runner.os }}-npm-
     - name: Install dependencies
       run: npm ci
-#    - name: Test
-#      run: npm run test --if-present
+    - name: Clean cache
+      run: rm -rf node_modules/gh-pages/.cache
     - name: Build
       run: npm run build --if-present
     - name: Build docs
