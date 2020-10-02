@@ -15,7 +15,7 @@ jobs:
       with:
         args: |
           envkey_MAPS_API_KEY: AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c
-        file_name: .env
+        file_name: ./dist/.env
     - name: Cache node modules
       uses: actions/cache@v1
       with:
@@ -33,7 +33,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+        publish_dir: ./dist
 
     # - uses: actions/checkout@v1
     # - name: Cache node modules
