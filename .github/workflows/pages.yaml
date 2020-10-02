@@ -25,6 +25,8 @@ jobs:
       run: npm run test --if-present
     - name: Build
       run: npm run build --if-present
+    - name: Audit + Fix
+      run: npm audit fix
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
