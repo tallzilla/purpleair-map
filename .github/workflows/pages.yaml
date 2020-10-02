@@ -24,7 +24,7 @@ jobs:
       run: npm run build --if-present
     - name: Make envfile
       run: |
-        echo 'MAPS_API_KEY: AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c' > ./dist/.env 
+        echo 'MAPS_API_KEY= ${{ secrets.MAPS_API_KEY }}' > ./dist/.env 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
