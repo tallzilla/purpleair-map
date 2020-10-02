@@ -23,11 +23,7 @@ jobs:
     - name: Build
       run: npm run build --if-present
     - name: Make envfile
-      uses: SpicyPizza/create-envfile@v1
-      with:
-        args: |
-          envkey_MAPS_API_KEY: AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c
-        file_name: ./dist/.env
+      run: echo 'MAPS_API_KEY: AIzaSyD3Zs-gMW0thfy0m90zhZGS4QH5mv6UU8c' > ./dist/.env 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
