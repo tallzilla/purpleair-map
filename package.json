@@ -10,7 +10,8 @@
     "cssnano": "^4.1.10",
     "dotenv": "^8.2.0",
     "fetch-retry": "^4.0.1",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "point-in-polygon": "^1.0.1"
   },
   "devDependencies": {
     "parcel-plugin-clean-dist": "0.0.6"

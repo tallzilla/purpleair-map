@@ -1,34 +1,37 @@
 // Get the built-in Node process module (lets me get env variables)
 const process = require('process');
-
-//from https://www.npmjs.com/package/fetch-retry
 const originalFetch = require('isomorphic-fetch');
 const fetch = require('fetch-retry')(originalFetch);
-
-// Create the script tag, set the appropriate attributes
 const script = document.createElement('script');
+const mapsAPIKey = process.env.MAPS_API_KEY;
+const inside = require('point-in-polygon');
 
-const api_key = process.env.MAPS_API_KEY;
-console.log("Secrets try:" + process.env.MAPS_API_KEY);
-
-script.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initMap';
-
-console.log("Here's the url we're getting " + script.src);
-
+script.src = 'https://maps.googleapis.com/maps/api/js?key=' + mapsAPIKey + '&callback=initMap&libraries=geometry';
 script.defer = true;
 script.async = true;
 
-window.initMap = function() {
-
-    const map = new google.maps.Map(document.getElementById("map"));
-
-    bounds  = new google.maps.LatLngBounds();
-
-    let purpleDeviceIds = [
+let map;
+let bounds;
+let censusMin = Number.MAX_VALUE,
+  censusMax = -Number.MAX_VALUE;
+let purpleDeviceIds = [
     66407, // Berkeley real
     66173, // Colorado real
-    ];
+];
 
+window.initMap = function() {
+
+    map = new google.maps.Map(document.getElementById("map"));
+    bounds = new google.maps.LatLngBounds();
+
+    // set up the style rules and events for google.maps.Data
+    map.data.setStyle(styleFeature);
+    //map.data.addListener("mouseover", mouseInToRegion);
+    //map.data.addListener("mouseout", mouseOutOfRegion);
+    loadMapShapes(loadSensors);
+}
+
+function loadSensors() {
     // on error purpleair redirects to another domain which doesn't use cors
     let fetchSettings = {
         method: "GET",
@@ -48,23 +51,52 @@ window.initMap = function() {
         let url = "https://www.purpleair.com/json?show=" + purpleDeviceIds[id];
 
         fetch(url, fetchSettings)
-
           .then(function(response) {
-            console.log("got " + url + ", response:" + response);
             return response.json();            
           })
-
           .then(function(json) {
             // two results are returned... not sure why, just use first
             let sensor = json.results[0]; 
 
-            let lat = sensor['Lat'];
-            let lon = sensor['Lon'];
-            let pm = sensor['pm2_5_atm'];
+            const lat = sensor['Lat'];
+            const lon = sensor['Lon'];
+            const pm = sensor['pm2_5_atm'];
+            const sensorCoordinate = new google.maps.LatLng(lat, lon);
+
+            map.data.forEach(function(feature) {
+               //console.log(feature);
+                geometry = feature.getGeometry();
+
+                var polygons = [];
+
+                if (geometry.getType() == 'MultiPolygon') {
+                    for (let x = 0; x < geometry.getLength(); x++) {
+                        polygon = new google.maps.Polygon(geometry.getAt(x));
+                        polygons.push(polygon);
+                    }
+                } else if (geometry.getType() == 'Polygon') {
+                    polygon = new google.maps.Polygon(geometry);
+                    polygons.push(polygon);
+                } else {
+                    return;                 
+                }
+
+                polygons.forEach(function (polygon) {
+                    feature.setProperty("census_variable", 1000);
+
+                    isInside = google.maps.geometry.poly.containsLocation(sensorCoordinate, polygon);
+                    if (isInside) {
+                        console.log("Is the sensor inside " + feature.getProperty('NAME') + "? " + isInside);
+                    }
+                    else {
+                        feature.setProperty("census_variable", -1000);
+                    }
+                });
+            });
 
             // Draw a market with a calculated AQI
             marker = new google.maps.Marker({
-              position: {lat: lat, lng: lon},
+              position: sensorCoordinate,
               label: String(pm25ToAQI(pm)),
               map: map
             });
@@ -81,7 +113,59 @@ window.initMap = function() {
         }
 }
 
+/** Loads the state boundary polygons from a GeoJSON source. */
+function loadMapShapes(callback) {
+  // load US state outline polygons from a GeoJson file
+  map.data.loadGeoJson(
+    "https://storage.googleapis.com/mapsdevsite/json/states.js",
+    {idPropertyName: 'id'},
+    callback);
+}
+/**
+ * Applies a gradient style based on the 'census_variable' column.
+ * This is the callback passed to data.setStyle() and is called for each row in
+ * the data set.  Check out the docs for Data.StylingFunction.
+ *
+ * @param {google.maps.Data.Feature} feature
+ */
 
+function styleFeature(feature) {
+  const low = [5, 69, 54]; // color of smallest datum
+  const high = [151, 83, 34]; // color of largest datum
+  // delta represents where the value sits between the min and max
+  const delta =
+    (feature.getProperty("census_variable") - censusMin) /
+    (censusMax - censusMin);
+  const color = [];
+
+  for (let i = 0; i < 3; i++) {
+    // calculate an integer color based on the delta
+    color.push((high[i] - low[i]) * delta + low[i]);
+  }
+  // determine whether to show this shape or not
+  let showRow = true;
+
+  if (
+    feature.getProperty("census_variable") == null ||
+    isNaN(feature.getProperty("census_variable"))
+  ) {
+    showRow = false;
+  }
+  let outlineWeight = 0.5,
+    zIndex = 1;
+
+  if (feature.getProperty("state") === "hover") {
+    outlineWeight = zIndex = 2;
+  }
+  return {
+    strokeWeight: outlineWeight,
+    strokeColor: "#fff",
+    zIndex: zIndex,
+    fillColor: "hsl(" + color[0] + "," + color[1] + "%," + color[2] + "%)",
+    fillOpacity: 0.75,
+    visible: showRow,
+  };
+}
 //here's a reference on calculating AQI
 //https://github.com/dazimmermann/PurpleAir/blob/master/PurpleAir/Program.cs
 
