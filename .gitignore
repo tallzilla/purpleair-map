@@ -2,7 +2,7 @@
 .env
 
 #any generated dist folder
-dist/*
+dist
 
 # Logs
 logs

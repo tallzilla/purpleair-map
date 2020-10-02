@@ -7,11 +7,9 @@ jobs:
   create-envfile:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: true
-        fetch-depth: 0
+    - uses: actions/checkout@v2
+    - run: node --version
+
     - name: Make envfile
       uses: SpicyPizza/create-envfile@v1
       with:
@@ -27,14 +25,32 @@ jobs:
           ${{ runner.os }}-npm-
     - name: Install dependencies
       run: npm ci
-    - name: Clean cache
-      run: rm -rf node_modules/gh-pages/.cache
+    - name: Test
+      run: npm run test --if-present
     - name: Build
       run: npm run build --if-present
-    - name: Build docs
-      run: echo 'parcel build ./src/index.html --public-url https://billheil.com/purpleair-map/ --no-minify'
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3.7.0-8
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
+        
+    # - uses: actions/checkout@v1
+    # - name: Cache node modules
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: ~/.npm
+    #     key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-npm-
+    # - name: Install dependencies
+    #   run: npm ci
+    # - name: Test
+    #   run: npm run test --if-present
+    # - name: Build
+    #   run: npm run build --if-present
+    # - name: Deploy
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./dist
