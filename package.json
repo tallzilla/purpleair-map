@@ -1,0 +1,33 @@
+{
+  "name": "purpleair-map",
+  "version": "1.0.0",
+  "description": "To run:\r parcel .\\src\\index.html",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "fetch-retry": "^4.0.1",
+    "isomorphic-fetch": "^2.2.1",
+    "point-in-polygon": "^1.0.1"
+  },
+  "devDependencies": {
+    "parcel-plugin-clean-dist": "0.0.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tallzilla/purpleair-map.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tallzilla/purpleair-map/issues"
+  },
+  "homepage": "https://github.com/tallzilla/purpleair-map#readme"
+}
