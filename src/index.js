@@ -16,8 +16,8 @@ script.async = true
 // const google = window.google
 let map
 let bounds
-const aqiMin = 0
-const aqiMax = 500
+const aqiMin = 400
+const aqiMax = 0
 const purpleDeviceIds = [
   66407, // Berkeley real
   66173 // Colorado real
