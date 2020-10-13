@@ -19,8 +19,8 @@ let bounds
 const aqiMin = 400
 const aqiMax = 0
 const purpleDeviceIds = [
-  66407,// Berkeley
-  66173,// Colorado
+  66407, // Berkeley
+  66173, // Colorado
   78959// LA
 ]
 
