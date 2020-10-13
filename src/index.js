@@ -19,8 +19,9 @@ let bounds
 const aqiMin = 0
 const aqiMax = 500
 const purpleDeviceIds = [
-  66407, // Berkeley real
-  66173 // Colorado real
+  66407, // Berkeley 
+  66173, // Colorado
+  78959, // LA
 ]
 
 window.initMap = function () {
