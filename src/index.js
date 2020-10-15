@@ -21,7 +21,8 @@ const aqiMax = 0
 const purpleDeviceIds = [
   66407, // Berkeley
   66173, // Colorado
-  78959// LA
+  78959, // LA
+  78941//SF
 ]
 
 window.initMap = function () {
