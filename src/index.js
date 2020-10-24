@@ -22,7 +22,8 @@ const purpleDeviceIds = [
   66407, // Berkeley
   66173, // Colorado
   78959, // LA
-  78941// SF
+  78941, // SF
+  78953//Carmel
 ]
 
 window.initMap = function () {
