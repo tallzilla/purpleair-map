@@ -23,7 +23,7 @@ const purpleDeviceIds = [
   66173, // Colorado
   78959, // LA
   78941, // SF
-  78953//Carmel
+  78953// Carmel
 ]
 
 window.initMap = function () {
